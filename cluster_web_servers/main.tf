@@ -76,3 +76,13 @@ variable "server_port" {
   type			= number
   default		= 80
 }
+
+variable "security_group_name" {
+  description		= "port 80 ok"
+  type			= string
+}
+
+output "public_ip" {
+  value			= aws_instance.example.public_ip
+  description		= "public web server IP address"
+}
