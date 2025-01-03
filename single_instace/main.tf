@@ -34,11 +34,11 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_security_group" "web_server_sg" {
-  name_prefix = "web-server-sg"
+  name = var.security_group_name
 
   ingress {
-    from_port 	= 80
-    to_port 	= 80
+    from_port 	= var.server_port 
+    to_port 	= var.server_port
     protocol	= "tcp"
     cidr_blocks	= ["0.0.0.0/0"]
   }
@@ -54,3 +54,18 @@ resource "aws_security_group" "web_server_sg" {
     Name = "WebServerSG"
    }
   }
+
+variable "security_group_name" {
+  description	= "the instance sg for port 80 http"
+  type 		= string
+}
+
+variable "server_port" {
+  description	= "The port the server will use for HTTP requests"
+  type		= number
+}
+
+output "public_ip" {
+  value		= aws.instance.example.public_ip
+  description	= "The web server public IP address"
+}
