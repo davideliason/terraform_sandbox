@@ -37,6 +37,12 @@ resource "aws_launch_configuration" "example" {
 		systemctl start httpd
 		systemctl enable httpd
 		EOF
+
+# req'd when using a launch config with ASG
+  lifecycle {
+    create_before_destroy	= true
+
+  }
 }
 
 resource "aws_autoscaling_group" "example" {
