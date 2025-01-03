@@ -58,4 +58,7 @@ resource "aws_autoscaling_group" "example" {
   }
 }
 
-
+#use data source with filter to look up Default VPC
+data "aws_vpc" "default" {
+  default 	= true
+}
