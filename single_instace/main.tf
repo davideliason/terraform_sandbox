@@ -20,12 +20,12 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_security_group" "instance" {
-  name = "tf-example-instance"
+  name = "tf-example-instance2"
 
   ingress {
     from_port 	= 8080
     to_port 	= 8080
-    protocolo	= "tcp"
+    protocol	= "tcp"
     cidr_blocks	= ["0.0.0.0/0"]
   }
 }
