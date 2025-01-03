@@ -27,7 +27,7 @@ resource "aws_security_group" "instance" {
 resource "aws_launch_configuration" "example" {
   image_id		= "ami-07d9cf938edb0739b"
   instance_type		= "t2.micro"
-  security_groups	= [aws.security_group.instance.id]
+  security_groups	= [aws_security_group.instance.id]
 
   user_data = <<-EOF
 		#!/bin/bash
@@ -69,4 +69,10 @@ data "aws_subnets" "default" {
     name 	= "vpc-id"
     values 	= [data.aws_vpc.default.id]
   }
+}
+
+variable "server_port" {
+  description 		= "The port used for HTTP"
+  type			= number
+  default		= 80
 }
