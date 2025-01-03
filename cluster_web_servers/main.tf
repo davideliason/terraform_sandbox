@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "instance" {
-  name = var.instance_security_group_name
+  name = var.security_group_name
 
   ingress {
     from_port   = var.server_port
@@ -22,9 +22,16 @@ resource "aws_security_group" "instance" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+    from_port	= 0
+    to_port	= 0
+    protocol	= "-1"
+    cidr_blocks	= ["0.0.0.0/0"]
+  }
 }
 
-resource "aws_launch_configuration" "example" {
+resource "aws_launch_template" "example" {
   image_id		= "ami-07d9cf938edb0739b"
   instance_type		= "t2.micro"
   security_groups	= [aws_security_group.instance.id]
@@ -55,7 +62,7 @@ resource "aws_autoscaling_group" "example" {
   tag {
     key			= "Name"
     value		= "terraform-asg-example"
-    propogate_at_launch	= true
+    propagate_at_launch	= true
   }
 }
 
@@ -82,7 +89,3 @@ variable "security_group_name" {
   type			= string
 }
 
-output "public_ip" {
-  value			= aws_instance.example.public_ip
-  description		= "public web server IP address"
-}
