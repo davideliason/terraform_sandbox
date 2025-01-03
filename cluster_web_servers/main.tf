@@ -39,17 +39,27 @@ resource "aws_launch_template" "example" {
   associate_public_ip_address	= true
   security_groups		= [aws_security_group.instance.id]
   }
-  
+
+   # User data script to configure the instance
+  user_data = base64encode(<<-EOF
+              #!/bin/bash
+              # Update and install Apache HTTP Server
+              yum update -y
+              yum install -y httpd
+              # Start the Apache service
+              systemctl start httpd
+              systemctl enable httpd
+              # Create a simple web page
+              echo "<html><h1>Hello from Terraform ASG with Launch Template!</h1></html>" > /var/www/html/index.html
+              EOF
+              )
 }
 
 resource "aws_autoscaling_group" "example" {
   launch_template {
 	id 	= aws_launch_template.example.id
    	version	= "$Latest"
-        }
-
-  vpc_zone_identifier	= data.aws_subnets.default.ids
-  
+                  }
   min_size		= 2
   max_size		= 10
 
@@ -57,7 +67,7 @@ resource "aws_autoscaling_group" "example" {
     key			= "Name"
     value		= "terraform-asg-example"
     propagate_at_launch	= true
-  }
+      }
 }
 
 #use data source with filter to look up Default VPC
