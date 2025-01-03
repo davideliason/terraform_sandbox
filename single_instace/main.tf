@@ -66,6 +66,6 @@ variable "server_port" {
 }
 
 output "public_ip" {
-  value		= aws.instance.example.public_ip
+  value		= aws_instance.example.public_ip
   description	= "The web server public IP address"
 }
