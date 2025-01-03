@@ -34,26 +34,20 @@ resource "aws_security_group" "instance" {
 resource "aws_launch_template" "example" {
   image_id		= "ami-07d9cf938edb0739b"
   instance_type		= "t2.micro"
-  security_groups	= [aws_security_group.instance.id]
 
-  user_data = <<-EOF
-		#!/bin/bash
-		yum update -y                   
-		yum install -y httpd
-		echo "<h2>hello</h2>" > var/www/html/index.html
-		systemctl start httpd
-		systemctl enable httpd
-		EOF
-
-# req'd when using a launch config with ASG
-  lifecycle {
-    create_before_destroy	= true
-
+  network_interfaces {
+  associate_public_ip_address	= true
+  security_groups		= [aws_security_group.instance.id]
   }
+  
 }
 
 resource "aws_autoscaling_group" "example" {
-  launch_configuration 	= aws_launch_configuration.example.name
+  launch_template {
+	id 	= aws_launch_template.example.id
+   	version	= "$Latest"
+        }
+
   vpc_zone_identifier	= data.aws_subnets.default.ids
   
   min_size		= 2
