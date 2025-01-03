@@ -24,9 +24,9 @@ resource "aws_security_group" "instance" {
   }
 
   egress {
-    from_port	= 0
-    to_port	= 0
-    protocol	= "-1"
+    from_port	= 80
+    to_port	= 80
+    protocol	= "tcp"
     cidr_blocks	= ["0.0.0.0/0"]
   }
 }
@@ -36,8 +36,8 @@ resource "aws_launch_template" "example" {
   instance_type		= "t2.micro"
 
   network_interfaces {
-  associate_public_ip_address	= true
-  security_groups		= [aws_security_group.instance.id]
+    associate_public_ip_address	= true
+    security_groups		= [aws_security_group.instance.id]
   }
 
    # User data script to configure the instance
@@ -59,7 +59,8 @@ resource "aws_autoscaling_group" "example" {
   launch_template {
 	id 	= aws_launch_template.example.id
    	version	= "$Latest"
-                  }
+  }
+
   min_size		= 2
   max_size		= 10
 
@@ -89,7 +90,7 @@ variable "server_port" {
 }
 
 variable "security_group_name" {
-  description		= "port 80 ok"
+  description		= "security group instance"
   type			= string
 }
 
