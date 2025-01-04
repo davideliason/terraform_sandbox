@@ -1,0 +1,131 @@
+{
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-0910b928ccd6c347a"
+  },
+  "vpc_main_route_table_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "rtb-06e87ac919e032fa9"
+  },
+  "vpc_private_subnet_ids": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string"
+      ]
+    ],
+    "value": [
+      "subnet-0ecc0c9f87f368709"
+    ]
+  },
+  "vpc_public_route_table_ids": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string"
+      ]
+    ],
+    "value": [
+      "rtb-092a418a976950182"
+    ]
+  },
+  "vpc_public_subnet_ids": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string"
+      ]
+    ],
+    "value": [
+      "subnet-0e3e22b1408138707"
+    ]
+  },
+  "vpc_public_subnet_objects": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        [
+          "object",
+          {
+            "arn": "string",
+            "assign_ipv6_address_on_creation": "bool",
+            "availability_zone": "string",
+            "availability_zone_id": "string",
+            "cidr_block": "string",
+            "customer_owned_ipv4_pool": "string",
+            "enable_dns64": "bool",
+            "enable_lni_at_device_index": "number",
+            "enable_resource_name_dns_a_record_on_launch": "bool",
+            "enable_resource_name_dns_aaaa_record_on_launch": "bool",
+            "id": "string",
+            "ipv6_cidr_block": "string",
+            "ipv6_cidr_block_association_id": "string",
+            "ipv6_native": "bool",
+            "map_customer_owned_ip_on_launch": "bool",
+            "map_public_ip_on_launch": "bool",
+            "outpost_arn": "string",
+            "owner_id": "string",
+            "private_dns_hostname_type_on_launch": "string",
+            "tags": [
+              "map",
+              "string"
+            ],
+            "tags_all": [
+              "map",
+              "string"
+            ],
+            "timeouts": [
+              "object",
+              {
+                "create": "string",
+                "delete": "string"
+              }
+            ],
+            "vpc_id": "string"
+          }
+        ]
+      ]
+    ],
+    "value": [
+      {
+        "arn": "arn:aws:ec2:us-west-2:412381753992:subnet/subnet-0e3e22b1408138707",
+        "assign_ipv6_address_on_creation": false,
+        "availability_zone": "us-west-2a",
+        "availability_zone_id": "usw2-az1",
+        "cidr_block": "10.0.101.0/24",
+        "customer_owned_ipv4_pool": "",
+        "enable_dns64": false,
+        "enable_lni_at_device_index": 0,
+        "enable_resource_name_dns_a_record_on_launch": false,
+        "enable_resource_name_dns_aaaa_record_on_launch": false,
+        "id": "subnet-0e3e22b1408138707",
+        "ipv6_cidr_block": "",
+        "ipv6_cidr_block_association_id": "",
+        "ipv6_native": false,
+        "map_customer_owned_ip_on_launch": false,
+        "map_public_ip_on_launch": false,
+        "outpost_arn": "",
+        "owner_id": "412381753992",
+        "private_dns_hostname_type_on_launch": "ip-name",
+        "tags": {
+          "Environment": "dev",
+          "Name": "friday-vpc-1-public-us-west-2a",
+          "Terraform": "true"
+        },
+        "tags_all": {
+          "Environment": "dev",
+          "Name": "friday-vpc-1-public-us-west-2a",
+          "Terraform": "true"
+        },
+        "timeouts": null,
+        "vpc_id": "vpc-0910b928ccd6c347a"
+      }
+    ]
+  }
+}

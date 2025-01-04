@@ -1,0 +1,60 @@
+# terraform output -json > terraform_outputs.json # capture TF outputs
+
+import json
+import boto3
+
+def tag_aws_resources(vpc_id, public_subnets, private_subnets, tags):
+    ec2 = boto3.client('ec2')
+
+    try:
+        # Tag the VPC
+        ec2.create_tags(
+            Resources=[vpc_id],
+            Tags=tags
+        )
+        print(f"Tagged VPC: {vpc_id}")
+
+        # Tag public subnets
+        if public_subnets:
+            ec2.create_tags(
+                Resources=public_subnets,
+                Tags=tags
+            )
+            print(f"Tagged Public Subnets: {public_subnets}")
+
+        # Tag private subnets
+        if private_subnets:
+            ec2.create_tags(
+                Resources=private_subnets,
+                Tags=tags
+            )
+            print(f"Tagged Private Subnets: {private_subnets}")
+
+    except Exception as e:
+        print(f"Error tagging resources: {e}")
+
+def main():
+    # Load Terraform outputs
+    with open('terraform_outputs.json', 'r') as f:
+        terraform_outputs = json.load(f)
+
+    # Extract values from Terraform outputs
+    vpc_id = terraform_outputs.get('vpc_id', {}).get('value')
+    public_subnets = terraform_outputs.get('public_subnets', {}).get('value', [])
+    private_subnets = terraform_outputs.get('private_subnets', {}).get('value', [])
+
+    # Define tags
+    tags = [
+        {'Key': 'Environment', 'Value': 'Development'},
+        {'Key': 'Owner', 'Value': 'DevOps Team'}
+    ]
+
+    if not vpc_id:
+        print("VPC ID not found in Terraform outputs.")
+        return
+
+    # Tag resources
+    tag_aws_resources(vpc_id, public_subnets, private_subnets, tags)
+
+if __name__ == "__main__":
+    main()
