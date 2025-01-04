@@ -33,6 +33,8 @@ resource "aws_security_group" "sg" {
   }
 }
 
+
+
 resource "aws_launch_template" "example" {
   name_prefix 		= "asg-launch-template-"
   image_id		= var.ami_id
